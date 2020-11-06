@@ -1,0 +1,22 @@
+<MainWindow>:
+    orientation: "vertical"
+    spacing: 10
+
+    bottom_layout: bottom_layout
+
+    BoxLayout:
+        size_hint_y: .2
+
+        Label:
+            text: "Access Control"
+            bold: True
+            size_hint_x: .9
+
+        Button:
+            text: "x"
+            size_hint_x: .1
+            on_press: root.do_something()
+
+    BoxLayout:
+        id: bottom_layout
+        size_hint_y: .8
