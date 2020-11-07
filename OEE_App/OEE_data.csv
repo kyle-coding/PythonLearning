@@ -1,0 +1,28 @@
+Timestamp,OEE_Main,OEE_Subcategory,OEE_State,Comment,Run_Speed
+11/5/2020 11:01:00,Shutdown,Shutdown,Shutdown,,0
+11/5/2020 11:30:00,Available,Startup,Setup,,
+11/5/2020 11:59:00,Available,Production,Producing,,20
+11/5/2020 12:50:00,Available,Startup,Setup,,
+11/5/2020 14:50:00,Available,Production,Producing,,30
+11/5/2020 15:26:00,Available,Production,Unplanned Stop,Mechanical Failure,
+11/5/2020 16:10:00,Available,Production,Producing,,30
+11/5/2020 18:24:00,Available,Startup,Setup,,
+11/5/2020 20:38:00,Shutdown,Shutdown,Shutdown,,
+11/6/2020 11:01:00,Shutdown,Shutdown,Shutdown,,0
+11/6/2020 11:36:00,Available,Startup,Setup,,
+11/6/2020 11:45:00,Available,Production,Producing,,20
+11/6/2020 12:10:00,Available,Startup,Setup,,
+11/6/2020 14:30:00,Available,Production,Producing,,30
+11/6/2020 15:45:00,Available,Production,Unplanned Stop,Mechanical Failure,
+11/6/2020 16:00:00,Available,Production,Producing,,30
+11/6/2020 18:04:00,Available,Startup,Setup,,
+11/6/2020 18:38:00,Shutdown,Shutdown,Shutdown,,
+11/6/2020 10:00:00,Shutdown,Shutdown,Shutdown,,0
+11/6/2020 11:01:00,Available,Startup,Setup,,
+11/6/2020 11:57:00,Available,Production,Producing,,20
+11/6/2020 12:45:00,Available,Startup,Setup,,
+11/6/2020 13:30:00,Available,Production,Producing,,30
+11/6/2020 15:55:00,Available,Production,Unplanned Stop,Mechanical Failure,
+11/6/2020 16:05:00,Available,Production,Producing,,30
+11/6/2020 18:35:00,Available,Startup,Setup,,
+11/6/2020 18:45:00,Shutdown,Shutdown,Shutdown,,

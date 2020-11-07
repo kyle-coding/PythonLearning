@@ -1,0 +1,2 @@
+cd C:\GitHub\PythonLearning\OEE_App
+pyuic5 OEE_App.ui -o OEE_App.py
