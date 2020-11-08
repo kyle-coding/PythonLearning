@@ -86,8 +86,7 @@ class PandasModel(QtCore.QAbstractTableModel):
 if __name__ == "__main__":
     # Call our OEE processing class and get the data
     OEE = dp.OEEData()
-    OEE.get_data()
-    OEE.print_raw_data()
+    # OEE.calculate_accumulated_time()
 
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
