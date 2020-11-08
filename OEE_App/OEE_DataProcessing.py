@@ -10,5 +10,5 @@ class OEEData:
     def get_data(self):
         self.df = pd.read_csv(self.loc)
 
-    def display_raw_data(self):
+    def print_raw_data(self):
         print(self.df.head())
