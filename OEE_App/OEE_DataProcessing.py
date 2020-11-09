@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from datetime import date, timedelta, datetime
 
+
 class OEEData:
 
     def get_data(self):
@@ -24,11 +25,27 @@ class OEEData:
 
     def get_day(self, day):
         next_day = day + timedelta(days=1)
-        output = self.calc_df[
+        ret = self.calc_df[
             (self.calc_df['Timestamp'] >= day) &
             (self.calc_df['Timestamp'] < next_day)
             ]
-        print(output)
+        return ret
+
+    def group_by_date(self):
+        self.calc_df['calc_Day'] = self.calc_df['Timestamp'].dt.dayofyear  # Add a day-of-the-year column
+        ret = self.calc_df.groupby(['calc_Day', 'OEE_Main', 'OEE_Subcategory', 'OEE_State'], as_index=False).sum()
+        ret.rename(columns={'calc_TimeInCurrentState': 'calc_sumOfTime'})
+        print(ret.columns)
+        return ret
+
+    def calc_total_available(self, data):
+        ret = data[(data['OEE_Main'] == 'Available')]
+        ret = ret.groupby(['calc_Day'], as_index=False).sum()
+        ret = ret[['calc_Day', 'calc_TimeInCurrentState']]
+        ret = ret.rename(columns={'calc_TimeInCurrentState': 'Total Time', 'calc_Day': 'Day of the Year'})
+        ret['Total Time'] = ret['Total Time'].dt.total_seconds() / 3600.0  # convert the datetime to hours
+        print(ret)
+        return ret
 
     def __init__(self):
         self.df = []  # This will be the raw dataframe from the csv file
@@ -36,9 +53,10 @@ class OEEData:
 
         self.get_data()
         self.calc_df = self.df.copy()
-        # self.print_raw_data()
         self.calculate_accumulated_time()
-        
+
         specific_date = datetime(2020, 11, 6)
         print(specific_date)
-        self.get_day(specific_date)
+        spec_day = self.get_day(specific_date)
+
+        self.data_totalAvailable = self.calc_total_available(self.group_by_date())

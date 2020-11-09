@@ -27,7 +27,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Adds the matplotlib graph to our "Graph" Tab
         fig1 = Figure()
         ax1f1 = fig1.add_subplot()
-        ax1f1.plot(np.random.rand(5))
+        ax1f1.plot(OEE.data_totalAvailable['Day of the Year'], OEE.data_totalAvailable['Total Time'])
+        ax1f1.set_title('Available Time')
+        ax1f1.set_xlabel('Day of the Year')
+        ax1f1.set_ylabel('Time Available (min)')
+        ax1f1.axis([300,320,0,24])
 
         # Add the plot:
         self.canvas = FigureCanvas(fig1)
@@ -40,7 +44,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def add_data_to_table(self):
         # Use our custom "PandasModel" class to set the model:
-        self.tableView.setModel(PandasModel(OEE.df))
+        self.tableView.setModel(PandasModel(OEE.data_totalAvailable))
         self.tableView.setColumnWidth(0, 150)  # Timestamp column
         self.tableView.setColumnWidth(3, 120)  # OEE state column
         self.tableView.setColumnWidth(4, 200)  # Comment column
