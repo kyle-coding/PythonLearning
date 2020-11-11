@@ -13,6 +13,9 @@ from matplotlib.backends.backend_qt5agg import (
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+from analoggaugewidget import AnalogGaugeWidget
+from PyQt5.QtCore import Qt
+
 
 plt.style.use('fivethirtyeight')
 matplotlib.use('QT5Agg')
@@ -49,6 +52,35 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tableView.setColumnWidth(3, 120)  # OEE state column
         self.tableView.setColumnWidth(4, 200)  # Comment column
 
+    def modify_gauge(self, gauge, layout):
+        gauge.enable_barGraph = True
+        gauge.value_needle_snapzone = 1
+        gauge.set_MaxValue(100)
+        gauge.set_gauge_color_outer_radius_factor(1000)
+        gauge.set_gauge_color_inner_radius_factor(600)
+        gauge.value_min = 0
+        gauge.update_value(30)
+        gauge.scala_main_count = 1
+        gauge.scala_subdiv_count = 1
+        gauge.enable_scale_text = False
+        gauge.enable_big_scaled_marker = False
+        gauge.set_scale_polygon_colors([[.00, Qt.darkGreen],
+                                       [.3, Qt.yellow],
+                                       [0.8, Qt.red]])
+        gauge.enable_CenterPoint = True
+        layout.addWidget(gauge)
+
+    def set_up_gauges(self):
+        self.gauge1 = AnalogGaugeWidget()
+        self.gauge2 = AnalogGaugeWidget()
+        self.gauge3 = AnalogGaugeWidget()
+        self.gauge4 = AnalogGaugeWidget()
+
+        self.modify_gauge(self.gauge1, self.layout_gauge1)
+        self.modify_gauge(self.gauge2, self.layout_gauge2)
+        self.modify_gauge(self.gauge3, self.layout_gauge3)
+        self.modify_gauge(self.gauge4, self.layout_gauge4)
+
     # Create the main window from our "OEE_App.ui" file
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
@@ -61,6 +93,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # populate the data on our "Data" tab:
         self.add_data_to_table()
+
+        self.set_up_gauges()
 
 
 class PandasModel(QtCore.QAbstractTableModel):
