@@ -15,11 +15,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from analoggaugewidget import AnalogGaugeWidget
 from PyQt5.QtCore import Qt
-
+import pyqtgraph
 
 plt.style.use('fivethirtyeight')
 matplotlib.use('QT5Agg')
-
 
 PYCHARM_DEBUG = True
 
@@ -34,7 +33,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         ax1f1.set_title('Available Time')
         ax1f1.set_xlabel('Day of the Year')
         ax1f1.set_ylabel('Time Available (min)')
-        ax1f1.axis([300,320,0,24])
+        ax1f1.axis([300, 320, 0, 24])
 
         # Add the plot:
         self.canvas = FigureCanvas(fig1)
@@ -47,7 +46,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def add_data_to_table(self):
         # Use our custom "PandasModel" class to set the model:
-        self.tableView.setModel(PandasModel(OEE.data_totalAvailable))
+        self.tableView.setModel(PandasModel(OEE.df))
         self.tableView.setColumnWidth(0, 150)  # Timestamp column
         self.tableView.setColumnWidth(3, 120)  # OEE state column
         self.tableView.setColumnWidth(4, 200)  # Comment column
@@ -65,8 +64,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         gauge.enable_scale_text = False
         gauge.enable_big_scaled_marker = False
         gauge.set_scale_polygon_colors([[.00, Qt.darkGreen],
-                                       [.3, Qt.yellow],
-                                       [0.8, Qt.red]])
+                                        [.3, Qt.yellow],
+                                        [0.8, Qt.red]])
         gauge.enable_CenterPoint = True
         layout.addWidget(gauge)
 
@@ -81,7 +80,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.modify_gauge(self.gauge3, self.layout_gauge3)
         self.modify_gauge(self.gauge4, self.layout_gauge4)
 
-    # Create the main window from our "OEE_App.ui" file
+    def plot_qt_graph(self):
+        self.graph_qt_widget.setBackground('w')
+        self.graph_qt_widget.setTitle("Availability", color='k', size='20pt')
+        styles = {'color': 'k', 'font-size': '15px'}
+        self.graph_qt_widget.setLabel('left', 'Available Time', **styles)
+        self.graph_qt_widget.setLabel('bottom', 'Day of the Year', **styles)
+        self.graph_qt_widget.addLegend(offset=(700,50))
+
+        x = OEE.data_totalAvailable['Day of the Year']
+        y = OEE.data_totalAvailable['Total Time']
+
+        pen = pg.mkPen(color=(255, 0, 0), width=3, style=QtCore.Qt.SolidLine)
+        self.line_available = self.graph_qt_widget.plot(x, y, pen=pen, name="Availability")
+
+    def refresh_qt_graph(self):
+        x = OEE.data_totalAvailable['Day of the Year']
+        y = OEE.data_totalAvailable['Total Time']
+        self.line_available.setData(x,y)
+
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.setupUi(self)
@@ -95,6 +112,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.add_data_to_table()
 
         self.set_up_gauges()
+
+        self.plot_qt_graph()
+
 
 
 class PandasModel(QtCore.QAbstractTableModel):

@@ -108,6 +108,14 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName("label_2")
         self.gridLayout_2.addWidget(self.label_2, 0, 1, 1, 1)
         self.tabWidget.addTab(self.tab_dials, "")
+        self.tab_graph_qt = QtWidgets.QWidget()
+        self.tab_graph_qt.setObjectName("tab_graph_qt")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.tab_graph_qt)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.graph_qt_widget = PlotWidget(self.tab_graph_qt)
+        self.graph_qt_widget.setObjectName("graph_qt_widget")
+        self.verticalLayout_3.addWidget(self.graph_qt_widget)
+        self.tabWidget.addTab(self.tab_graph_qt, "")
         self.verticalLayout.addWidget(self.tabWidget)
         self.gridLayout.addLayout(self.verticalLayout, 1, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -118,7 +126,7 @@ class Ui_MainWindow(object):
         self.actionData.setObjectName("actionData")
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -131,4 +139,6 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Performance"))
         self.label_2.setText(_translate("MainWindow", "Availability"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_dials), _translate("MainWindow", "Dials"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_graph_qt), _translate("MainWindow", "Qt Graph"))
         self.actionData.setText(_translate("MainWindow", "Data"))
+from pyqtgraph import PlotWidget
