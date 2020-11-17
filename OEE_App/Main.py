@@ -64,8 +64,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         gauge.enable_scale_text = False
         gauge.enable_big_scaled_marker = False
         gauge.set_scale_polygon_colors([[.00, Qt.darkGreen],
-                                        [.3, Qt.yellow],
-                                        [0.8, Qt.red]])
+                                        [.4, Qt.yellow],
+                                        [0.7, Qt.red]])
         gauge.enable_CenterPoint = True
         layout.addWidget(gauge)
 
